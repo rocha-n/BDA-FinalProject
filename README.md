@@ -12,4 +12,5 @@ The difficulty is that the first data source gives us a string with a region nam
 
 Once we will have passed this data consiliation phase, we will be able to find if there is a correlation between solar radiance and the whine appreciation.
 We will also be able to potentially map a whine to a region, based on its ranking (and potentially other parameters), using machine learning.
+
 We will see alos in witch country the pinot noir is the best for exemple
