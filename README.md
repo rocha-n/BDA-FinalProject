@@ -44,13 +44,28 @@ title | The title of the wine review, which often contains the vintage if you're
 
 The Kaggle page states that there are duplicates in the files, and that the extended one has around 25K more records to play with.
 
-//TODO: The second dataset description
+The second dataset if from the [OpenSolarDB project](http:\\www.opensolardb.org).  
+They provide data comming from measures of solar radiation on specific points on the planet.  
+Their data has the following structure:
+
+Field | Description
+------------ | -------------
+country (ISO 3166-1) | Country identification, for instance US, UK, ES, etc.
+Place | The name of the place where data has been measured
+Lattitude | Latitude where the measures have been taken
+Longitude | Longitude where the measures have been taken 
+Radiation January | Radiation for January in MJ/(day*m2)
+ ... | ...
+Radiation December | Radiation for December in MJ/(day*m2)
+
 
 So the first step is to perform some data cleaning on the kaggle files, in order to obtains a single table without duplicates, nor records where country or region information is null.  
 
-After that, we will have to match each record of the database with climate records, in order to associate with each wine a medium solar irradiation value.
+After that, we will have to match each record of the database with climate records, in order to associate with each wine a medium solar irradiation value. Obviously, we will have to match the region_1 and region_2 fields from the Kaggle database with the Region field of the OpenSolar one. 
 
-### Cleaning the wine dataset
+//TODO : If we don't find a match, medium value or closest point?
+
+### Dataset cleaning and data quality observations
 
 <!-- 
 select * into finalWine from (
@@ -82,8 +97,33 @@ delete from finalWine where country is null;
 -- (60 rows affected)
 
 select count(1) from finalWine;
-170522
+170462
 -->
 
+First of all, we had to merge the two Kaggle files. We cleaned the duplicates, so now we only have unique values in the database.
+The total number wines we have is now 170522. Among those, there are 60 that have a null value in the country field. We won't obviously be able to calculate any solar radiation for a unknown place. Therefore, we deleted them from our dataset, bringing our number of records to 170462. This is now our wine DB.
+
+Then, we had to retrieve the data from OpenSolarDB. As it is available only in a one file per country format, we listed all the countries present in our wine DB. For each one of the 50 countries available on our database, we downloaded manually a csv file. We haven't found any way to automate that phase.  
+A that point, another problem surge: not all of our 50 countries were available on OpenSolarDB. 
+The missing ones are at the count of five: Brazil, Montenegro, Peru, Uruguay, and US-France (no, this isn't a typo. There was a single wine that was made with grapes from this two countries, so it has been labeled like that in the database).
+
+Here is a chart of the number of wines impacted by this issue:
+<!-- select country, count(1) as cnt from finalWine where country in ('Brazil','Montenegro','Peru','Uruguay','US-France') group by country order by cnt desc -->
+
+country	| nb of wines
+---|---
+Uruguay|	142
+Brazil	|57
+Peru	|16
+Montenegro|	1
+US-France|	1
+
+So, between the null values removed at the first step, and the ones mentionned in the above chart, we have now a total of 0.16% of data loss to lack of consistency and/or availability of data.  
+
+We spent a bit of time searching for a replacement for OpenSolarDB, in order to have a full coverage of data. Finally, due to the nearly-insignificant proportion of data loss, we agreed on going forward with our current data. It seems absolutely acceptable from our point of view.
+
+//TODO: A chart of nb of wines / country, and maybe the ratings distributsion
+
+### Matching regions with solar radiation
 
 
