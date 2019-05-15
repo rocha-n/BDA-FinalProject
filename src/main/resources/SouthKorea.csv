@@ -1,0 +1,5 @@
+"Country (ISO 3166-1)",Place,Lattitude,Longitude,"Radiation January","Radiation February","Radiation March","Radiation April","Radiation May","Radiation June","Radiation July","Radiation August","Radiation September","Radiation October","Radiation November","Radiation December"
+KR,Busan,35.10,129.02,9.39,11.80,14.29,17.15,18.34,16.96,15.41,16.13,13.64,12.48,9.80,8.78
+KR,Gangneung,37.75,128.88,8.75,10.90,13.62,16.71,17.59,16.93,14.27,13.90,12.70,11.61,8.84,8.12
+KR,Mokpo,34.82,126.37,8.47,11.71,14.84,18.15,19.00,17.65,16.61,17.21,15.32,13.53,9.67,7.76
+KR,Seoul,37.57,126.95,7.35,10.08,12.94,15.85,16.98,15.86,11.96,12.69,12.81,11.11,7.66,6.62
