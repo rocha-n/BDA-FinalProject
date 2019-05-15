@@ -34,6 +34,7 @@ variety | The type of grapes used to make the wine (ie Pinot Noir)
 winery | The winery that made the wine
 
 One of the files has this extra informations:
+
 Field | Description
 ------------ | -------------
 taster_name | Name of the taster that reviewed this wine
@@ -50,5 +51,39 @@ So the first step is to perform some data cleaning on the kaggle files, in order
 After that, we will have to match each record of the database with climate records, in order to associate with each wine a medium solar irradiation value.
 
 ### Cleaning the wine dataset
+
+<!-- 
+select * into finalWine from (
+select [country]
+      ,[description]
+      ,[designation]
+      ,[points]
+      ,[price]
+      ,[province]
+      ,[region_1]
+      ,[region_2]
+      ,[variety]
+      ,[winery] from winemag
+union
+select [country]
+      ,[description]
+      ,[designation]
+      ,[points]
+      ,[price]
+      ,[province]
+      ,[region_1]
+      ,[region_2]
+      ,[variety]
+      ,[winery] from winemag2
+	  ) as vFinalWine;
+-- (170522 rows affected)
+
+delete from finalWine where country is null;
+-- (60 rows affected)
+
+select count(1) from finalWine;
+170522
+-->
+
 
 
