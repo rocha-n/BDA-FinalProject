@@ -126,4 +126,45 @@ We spent a bit of time searching for a replacement for OpenSolarDB, in order to 
 
 ### Matching regions with solar radiation
 
+<!-- ESSAIS INFRUCTUEUX
+select * from [xxxxx].[dbo].[wineWIP] where region_1 is not null and region_2 is not null
 
+select * from solarAverages where country = 'US'
+
+-- 1 -> create a mean of solar radiation
+	select * into solarAverages from (select country, place, ([January]
+      +[February]
+      +[March]
+      +[April]
+      +[May]
+      +[June]
+      +[July]
+      +[August]
+      +[September]
+      +[October]
+      +[November]
+      +[December])/12 as average from [xxxxx].[dbo].[radiation]) as vSolarAverages
+	  
+-- 2 -> delete those who have a country that is not in the OpenSolarDB database
+	delete from WineWIP where country in ('Brazil','Montenegro','Peru','Uruguay','US-France');
+
+-- 3 -> alter the table WineWIP to add a column for solar radiation
+	ALTER TABLE [xxxxx].[dbo].[wineWIP] ADD solarRadiation float;
+
+-- 4 -> check data coherence
+	select count(1) from [xxxxx].[dbo].[wineWIP] where region_1 is null and region_2 is null;		  -- no region_1 and no region_2: 27686
+	select count(1) from [xxxxx].[dbo].[wineWIP] where region_1 is not null and region_2 is null;	  -- only region_1				: 74909
+	select count(1) from [xxxxx].[dbo].[wineWIP] where region_1 is null and region_2 is not null;	  -- only region_2				: 0
+	select count(1) from [xxxxx].[dbo].[wineWIP] where region_1 is not null and region_2 is not null; -- region_1 and region_2		: 67650
+																																------------
+																									  -- TOTAL						 170245
+-- 5 -> complete the records having no region_1 or region_2 values
+UPDATE [xxxxx].[dbo].[wineWIP]
+SET [xxxxx].[dbo].[wineWIP].solarRadiation = (select AVG(solarAverages.average) from solarAverages where solarAverages.country = [xxxxx].[dbo].[wineWIP].country) 
+where [xxxxx].[dbo].[wineWIP].region_1 is null and [xxxxx].[dbo].[wineWIP].region_2 is null
+
+-- 6 -> case only region_1
+UPDATE [xxxxx].[dbo].[wineWIP]
+SET [xxxxx].[dbo].[wineWIP].solarRadiation = (select AVG(solarAverages.average) from solarAverages where solarAverages.country = [xxxxx].[dbo].[wineWIP].country and [xxxxx].[dbo].[wineWIP].region_2 = solarAverages.Place) 
+where [xxxxx].[dbo].[wineWIP].region_1 is not null and [xxxxx].[dbo].[wineWIP].region_2 is not null; -- 67650 matches
+-->
