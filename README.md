@@ -15,10 +15,10 @@ We will also be able to potentially map a whine to a region, based on its rankin
 
 We will see alos in witch country the pinot noir is the best for exemple.
 
-Also, this data will allow us to answer to the following questions:
-1 - What is the solar irradiation corellation with the appreciation score?
-2 - Is there a correlation between the price of the wine and the appreciation score?
-3 - What are the most appreciated grapes types?
+Also, this data will allow us to answer to the following questions:  
+1 - What is the solar irradiation corellation with the appreciation score?  
+2 - Is there a correlation between the price of the wine and the appreciation score?  
+3 - What are the most appreciated grapes types?  
 
 
 ## Data description
