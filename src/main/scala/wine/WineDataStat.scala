@@ -6,6 +6,7 @@ import org.apache.spark.sql.{DataFrame, Encoders}
 import wine.Columns._
 import wine.WineDataLoader.{addRowNumber, loadFile}
 
+
 object WineDataStat {
   private val PRECISION = 4
   private val SCALE = 2
