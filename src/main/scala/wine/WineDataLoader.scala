@@ -3,19 +3,17 @@ package wine
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.sql.functions._
-import org.apache.spark.sql.{DataFrame, SaveMode}
+import org.apache.spark.sql.types.{LongType, StructField, StructType}
+import org.apache.spark.sql.{DataFrame, Row, SaveMode}
 
-case class WineInfo(country: String, description: String, points: String, price: String, province: String, region_1: String, region_2: String, variety: String, winery: String) {
-}
-
-object WineData {
-  private val spark = org.apache.spark.sql.SparkSession.builder.master("local[*]").appName("WineData CSV Reader").getOrCreate()
+object WineDataLoader {
+  val spark = org.apache.spark.sql.SparkSession.builder.master("local[*]").appName("WineData CSV Reader").getOrCreate()
 
   def mergeAllFile(): DataFrame = {
     val csv1 = loadFile("winemag-data-130k-v2.csv")
     val csv2 = loadFile("winemag-data_first150k.csv")
     val all = csv1.union(csv2)
-    val allDistinct =  filterNullValue(all).distinct()
+    val allDistinct = filterNullValue(all).distinct()
     allDistinct.printSchema()
     val path = "src/main/resources/concatFile/"
     println("All: " + all.count())
@@ -28,7 +26,7 @@ object WineData {
       .option("header", "true") //Write the header
       .csv(path)
     reNameCsvFile(path)
-   return allDistinct
+    return allDistinct
   }
 
   def loadFile(path: String): DataFrame = {
@@ -37,7 +35,7 @@ object WineData {
       .option("inferSchema", true)
       .load("src/main/resources/" + path)
 
-    val select = dataFrame.select(
+    dataFrame.select(
       col("country"),
       col("description"),
       col("designation"),
@@ -49,15 +47,22 @@ object WineData {
       col("variety"),
       col("winery")
     )
-    return select;
   }
 
-  private def filterNullValue( dataFrame: DataFrame ) = {
+  def addRowNumber(df: DataFrame) = {
+    spark.sqlContext.createDataFrame(
+      df.rdd.zipWithIndex.map {
+        case (row, index) => Row.fromSeq(row.toSeq :+ index + 1)
+      },
+      // Create schema for index column
+      StructType(df.schema.fields :+ StructField("Row number", LongType, false)))
+  }
+  private def filterNullValue(dataFrame: DataFrame) = {
     dataFrame.filter(
       dataFrame("country").isNotNull &&
-      length(col("country")) < 30 &&
-      col("points").isNotNull &&
-      col("points") > 0)
+        length(col("country")) < 30 &&
+        col("points").isNotNull &&
+        col("points") > 0)
   }
 
   private def reNameCsvFile(path: String) = {
@@ -65,6 +70,4 @@ object WineData {
     val file = fs.globStatus(new Path(path + "part*"))(0).getPath.getName
     fs.rename(new Path(path + file), new Path(path + "allWine.csv"))
   }
-
-
 }
