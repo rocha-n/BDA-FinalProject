@@ -131,8 +131,11 @@ We spent a bit of time searching for a replacement for OpenSolarDB, in order to 
 //TODO: A chart of nb of wines / country, and maybe the ratings distributsion
 
 ### Matching regions with solar radiation
-#Divers information on wine
-##Data structur
+
+# Divers information on wine
+
+## Data structur
+
 root  
  |-- country: string (nullable = true)  
  |-- description: string (nullable = true)  
@@ -145,7 +148,7 @@ root
  |-- variety: string (nullable = true)  
  |-- winery: string (nullable = true)  
 
-##Witch is best variety
+## Witch is best variety
 
 Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stddev|Number tested|Row number
 ----------------------------------- | ----------- | ------------- | ---------- | --------- | --------- | ------------ | -------------|---------- 
@@ -250,7 +253,7 @@ Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stdd
 |Malbec-Cabernet Sauvignon          |88.13      |3.21         |38.07     |10.0     |169.0    |37.44       |72           |99        |
 
 
-##Witch country as most variety 
+## Witch country as most variety 
 
 |Country               |Number tested|Count variety|Points mean|Points stddev|Price mean|Price min|Price max|Price stddev|Row number|
 |----------------------|-------------|-------------|-----------|-------------|----------|---------|---------|------------|----------|
@@ -306,7 +309,7 @@ Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stdd
 |Japan                 |1            |1            |85.00      |null         |24.00     |24.0     |24.0     |null        |50        |
 
 
-##In witch country is there the best wine
+## In witch country is there the best wine
 
 |Country     |Number tested|Points mean|Points stddev|Points mean|Price min|Price max|Price stddev|Row number|
 |------------|-------------|-----------|-------------|-----------|---------|---------|------------|----------|
@@ -445,7 +448,7 @@ Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stdd
 |US      |Merlot-Cabernet Sauvignon    |88.50      |3.06         |51.83     |9.0      |96.0     |24           |31.18       |99        |
 |Italy   |Corvina                      |88.50      |2.98         |41.54     |10.0     |95.0     |26           |31.20       |100       |
 
-##Witch is variety the most tested in country
+## Witch is variety the most tested in country
 
 |Country     |Variety                      |Number tested|Price mean|Price min|Price max|Price stddev|Row number|
 |------------|-----------------------------|-------------|----------|---------|---------|------------|----------|
@@ -550,7 +553,8 @@ Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stdd
 |South Africa|Chardonnay                   |265          |21.11     |8.0      |80.0     |11.90       |99        |
 |Austria     |Blaufränkisch                |264          |33.32     |9.0      |129.0    |22.52       |100       |
 
-##Witch country has the best variety ( top 20 )
+## Witch country has the best variety ( top 20 )
+
 |Country |Variety               |Points mean|Points stddev|Price mean|Price min|Price max|Price stddev|Number tested|Row number|
 |--------|----------------------|-----------|-------------|----------|---------|---------|------------|-------------|----------|
 |France  |Petit Manseng         |91.70      |1.78         |31.94     |11.0     |128.0    |20.04       |43           |1         |
