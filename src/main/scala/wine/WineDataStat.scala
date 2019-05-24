@@ -4,7 +4,7 @@ import org.apache.spark.sql.functions.{count, mean, _}
 import org.apache.spark.sql.types.DecimalType
 import org.apache.spark.sql.{DataFrame, Encoders, SaveMode}
 import wine.Columns._
-import wine.WineDataLoader.{addRowNumber, loadFile}
+import wine.WineDataLoader.{addRowNumber, loadWineFile}
 
 
 object WineDataStat {
@@ -12,7 +12,7 @@ object WineDataStat {
   private val SCALE = 2
 
   def computeStat(): Unit = {
-    val dataFrame = loadFile("concatFile/allWine.csv")
+    val dataFrame = loadWineFile("concatFile/allWine.csv")
 
 
     //println(t.count())

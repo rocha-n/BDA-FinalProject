@@ -1,4 +1,4 @@
-country,province,region_1,region_2,Row number
+country,province,region_1,region_2,index
 Spain,Northern Spain,Rioja,"",1
 Italy,Piedmont,Barolo,"",2
 US,California,Monterey,Central Coast,3

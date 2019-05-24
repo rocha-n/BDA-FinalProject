@@ -11,8 +11,8 @@ object WineDataLoader {
   val fs = FileSystem.get(new Configuration())
 
   def mergeAllFile(): DataFrame = {
-    val csv1 = loadFile("winemag-data-130k-v2.csv")
-    val csv2 = loadFile("winemag-data_first150k.csv")
+    val csv1 = loadWineFile("winemag-data-130k-v2.csv")
+    val csv2 = loadWineFile("winemag-data_first150k.csv")
     val all = csv1.union(csv2)
     val allDistinct = filterNullValue(all).distinct()
     allDistinct.printSchema()
@@ -40,7 +40,7 @@ object WineDataLoader {
       col("province"),
       col("region_1"),
       col("region_2")
-    ).distinct())
+    ).distinct(), "index")
     region.repartition(1)
       .write.mode(SaveMode.Overwrite)
       .format("com.databricks.spark.csv")
@@ -54,11 +54,8 @@ object WineDataLoader {
     reNameCsvFile(path, "region.csv")
   }
 
-  def loadFile(path: String): DataFrame = {
-    val dataFrame = spark.read.format("csv")
-      .option("header", true)
-      .option("inferSchema", true)
-      .load("src/main/resources/" + path)
+  def loadWineFile(path: String): DataFrame = {
+    val dataFrame: DataFrame = loadFile(path)
 
     dataFrame.select(
       col("country"),
@@ -74,13 +71,25 @@ object WineDataLoader {
     )
   }
 
-  def addRowNumber(df: DataFrame) = {
+  def sql(sql: String) = {
+    this.spark.sql(sql);
+  }
+
+  def loadFile(path: String) = {
+    val dataFrame = spark.read.format("csv")
+      .option("header", true)
+      .option("inferSchema", true)
+      .load("src/main/resources/" + path)
+    dataFrame
+  }
+
+  def addRowNumber(df: DataFrame, name: String = "Row number") = {
     spark.sqlContext.createDataFrame(
       df.rdd.zipWithIndex.map {
         case (row, index) => Row.fromSeq(row.toSeq :+ index + 1)
       },
       // Create schema for index column
-      StructType(df.schema.fields :+ StructField("Row number", LongType, false)))
+      StructType(df.schema.fields :+ StructField(name, LongType, false)))
   }
   private def filterNullValue(dataFrame: DataFrame) = {
     dataFrame.filter(
