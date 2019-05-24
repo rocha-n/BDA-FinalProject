@@ -12,13 +12,11 @@ object WineRegionMerger {
 
     val allData = sql(
       """
-          SELECT wine.country, wine.description, wine.designation, wine.points, wine.price,
-                 wine.province, wine.region_1, wine.region_2, wine.variety, wine.variety,
-                 wine.winery, region.index
+          SELECT wine.*, region.index
             FROM wine
            INNER JOIN region ON region.indexRegion = wine.indexRegion
       """)
-
+    allData.show(truncate = false)
     println("Nb row in region: " + dataFrameRegion.count())
     println("Nb row in wine: " + dataFrameWine.count())
     println("Nb row in merge: " + allData.count())
