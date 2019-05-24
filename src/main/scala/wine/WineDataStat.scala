@@ -2,7 +2,7 @@ package wine
 
 import org.apache.spark.sql.functions.{count, mean, _}
 import org.apache.spark.sql.types.DecimalType
-import org.apache.spark.sql.{DataFrame, Encoders}
+import org.apache.spark.sql.{DataFrame, Encoders, SaveMode}
 import wine.Columns._
 import wine.WineDataLoader.{addRowNumber, loadFile}
 
@@ -13,9 +13,12 @@ object WineDataStat {
 
   def computeStat(): Unit = {
     val dataFrame = loadFile("concatFile/allWine.csv")
+
+
+    //println(t.count())
     // val newDataFrame = prepareData(dataFrame).toDF()
     // newDataFrame.show()
-    val bestVariety = witchIsTheBestVariety(dataFrame)
+  /*  val bestVariety = witchIsTheBestVariety(dataFrame)
     bestVariety.show(100, truncate = false)
 
     val countryMostVariety = witchCountryAsMostVariety(dataFrame)
@@ -28,7 +31,7 @@ object WineDataStat {
 
     witchIsVarietyMostTested(dataFrame).show(100, truncate = false)
 
-    witchCountryHasTheBestVariety(dataFrame, bestVariety).show(100, truncate = false)
+    witchCountryHasTheBestVariety(dataFrame, bestVariety).show(100, truncate = false)*/
   }
 
   private def witchIsVarietyMostTested(dataFrame: DataFrame) = {

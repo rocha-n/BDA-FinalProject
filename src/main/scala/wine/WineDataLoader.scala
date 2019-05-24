@@ -4,10 +4,11 @@ import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.{LongType, StructField, StructType}
-import org.apache.spark.sql.{DataFrame, Row, SaveMode}
+import org.apache.spark.sql.{DataFrame, Dataset, Row, SaveMode}
 
 object WineDataLoader {
   val spark = org.apache.spark.sql.SparkSession.builder.master("local[*]").appName("WineData CSV Reader").getOrCreate()
+  val fs = FileSystem.get(new Configuration())
 
   def mergeAllFile(): DataFrame = {
     val csv1 = loadFile("winemag-data-130k-v2.csv")
@@ -25,8 +26,32 @@ object WineDataLoader {
       .option("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false") //Avoid creating of crc files
       .option("header", "true") //Write the header
       .csv(path)
-    reNameCsvFile(path)
+    reNameCsvFile(path, "allWine.csv")
+
+    generateRegioFile(allDistinct)
+
     return allDistinct
+  }
+
+  private def generateRegioFile(allDistinct: Dataset[Row]) = {
+    val path = "src/main/resources/region/"
+    val region = addRowNumber(allDistinct.select(
+      col("country"),
+      col("province"),
+      col("region_1"),
+      col("region_2")
+    ).distinct())
+    region.repartition(1)
+      .write.mode(SaveMode.Overwrite)
+      .format("com.databricks.spark.csv")
+      .option("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false") //Avoid creating of crc files
+      .option("header", "true") //Write the header
+      .csv(path)
+
+    region.printSchema()
+    println("Region: " + region.count())
+
+    reNameCsvFile(path, "region.csv")
   }
 
   def loadFile(path: String): DataFrame = {
@@ -65,9 +90,8 @@ object WineDataLoader {
         col("points") > 0)
   }
 
-  private def reNameCsvFile(path: String) = {
-    val fs = FileSystem.get(new Configuration())
+  private def reNameCsvFile(path: String, name: String) = {
     val file = fs.globStatus(new Path(path + "part*"))(0).getPath.getName
-    fs.rename(new Path(path + file), new Path(path + "allWine.csv"))
+    fs.rename(new Path(path + file), new Path(path + name))
   }
 }
