@@ -4,9 +4,10 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class WinStatTest extends TestMain {
+class SqlExecutorTest extends TestMain {
 
-  test("Do stats") {
-    WineDataStat.computeStat()
+  test("testExecuteALlSql") {
+    SqlExecutor.executeALlSql();
   }
+
 }

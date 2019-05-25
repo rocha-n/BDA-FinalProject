@@ -2,23 +2,20 @@ package wine
 
 import org.apache.spark.sql.functions.{count, mean, _}
 import org.apache.spark.sql.types.DecimalType
-import org.apache.spark.sql.{DataFrame, Encoders, SaveMode}
+import org.apache.spark.sql.{DataFrame, Encoders}
 import wine.Columns._
-import wine.WineDataLoader.{addRowNumber, loadWineFile}
+import wine.WineDataLoader.loadWine
+import wine.Spark.{addRowNumber}
 
 
 object WineDataStat {
-  private val PRECISION = 4
+  private val PRECISION = 10
   private val SCALE = 2
 
   def computeStat(): Unit = {
-    val dataFrame = loadWineFile("concatFile/allWine.csv")
+    val dataFrame = loadWine()
 
-
-    //println(t.count())
-    // val newDataFrame = prepareData(dataFrame).toDF()
-    // newDataFrame.show()
-  /*  val bestVariety = witchIsTheBestVariety(dataFrame)
+    val bestVariety = witchIsTheBestVariety(dataFrame)
     bestVariety.show(100, truncate = false)
 
     val countryMostVariety = witchCountryAsMostVariety(dataFrame)
@@ -31,7 +28,7 @@ object WineDataStat {
 
     witchIsVarietyMostTested(dataFrame).show(100, truncate = false)
 
-    witchCountryHasTheBestVariety(dataFrame, bestVariety).show(100, truncate = false)*/
+    witchCountryHasTheBestVariety(dataFrame, bestVariety).show(100, truncate = false)
   }
 
   private def witchIsVarietyMostTested(dataFrame: DataFrame) = {

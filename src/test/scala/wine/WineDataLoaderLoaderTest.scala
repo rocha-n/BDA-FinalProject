@@ -2,15 +2,9 @@ package wine
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{BeforeAndAfterAll, FunSuite}
-
 
 @RunWith(classOf[JUnitRunner])
-class WineDataLoaderLoaderTest extends FunSuite with BeforeAndAfterAll {
-
-  override def beforeAll(): Unit = {
-    SysUtils.configSystem()
-  }
+class WineDataLoaderLoaderTest extends TestMain {
 
   test("mergeFile load file") {
     val wineData = WineDataLoader.mergeAllFile()

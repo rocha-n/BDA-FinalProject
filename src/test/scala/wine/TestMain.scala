@@ -1,10 +1,11 @@
 package wine
 
 import org.apache.log4j.{Level, Logger}
+import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
-package object SysUtils {
+class TestMain extends FunSuite with BeforeAndAfterAll {
 
-  def configSystem(): Unit = {
+  override def beforeAll(): Unit = {
     val rootLogger = Logger.getRootLogger
     rootLogger.setLevel(Level.ERROR)
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)

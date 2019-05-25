@@ -2,7 +2,10 @@ package wine
 
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.{col, concat_ws}
-import wine.WineDataLoader.{loadFile, loadWineFile, sql}
+import wine.Columns._
+import wine.FileNames._
+import wine.Spark.{addRowNumber, saveAsCsv, sql}
+import wine.WineDataLoader._
 
 object WineRegionMerger {
 
@@ -12,10 +15,18 @@ object WineRegionMerger {
 
     val allData = sql(
       """
-          SELECT wine.*, region.index
+          SELECT wine.id, region.index as id_region,
+                 wine.country, wine.description, wine.designation,
+                 wine.points, wine.price, wine.province,
+                 wine.region_1, wine.region_2, wine.variety,
+                 wine.winery
             FROM wine
            INNER JOIN region ON region.indexRegion = wine.indexRegion
+           ORDER BY wine.id
       """)
+
+    saveAsCsv(allData, WINE_WITH_INDEX_REGION)
+
     allData.show(truncate = false)
     println("Nb row in region: " + dataFrameRegion.count())
     println("Nb row in wine: " + dataFrameWine.count())
@@ -24,7 +35,7 @@ object WineRegionMerger {
   }
 
   private def generateTableRegion = {
-    var dataFrameRegion = loadFile("region/region.csv")
+    var dataFrameRegion = loadRegion()
       .select(
         concactForIndex(),
         col("index")
@@ -33,30 +44,19 @@ object WineRegionMerger {
     dataFrameRegion.createOrReplaceTempView("region")
     dataFrameRegion
   }
+
   private def generateTableWine = {
-    val dataFrameWine = loadWineFile("concatFile/allWine.csv")
-      .select(
-        concactForIndex(),
-        col("country"),
-        col("description"),
-        col("designation"),
-        col("points"),
-        col("price"),
-        col("province"),
-        col("region_1"),
-        col("region_2"),
-        col("variety"),
-        col("winery"))
-      .toDF()
+    val dataFrameWine = addRowNumber(loadWine().withColumn("indexRegion", concactForIndex()), "id")
     dataFrameWine.createOrReplaceTempView("wine")
     dataFrameWine
   }
+
   private def concactForIndex() = {
     concat_ws("-",
-      col("country"),
-      col("province"),
-      col("region_1"),
-      col("region_2"))
-      .alias("indexRegion")
+      col(COUNTRY),
+      col(PROVINCE),
+      col(REGION_1),
+      col(REGION_2)
+    ).alias("indexRegion")
   }
 }

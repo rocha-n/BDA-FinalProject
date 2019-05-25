@@ -2,7 +2,7 @@ package wine
 
 import org.apache.spark.ml.clustering.KMeans
 import org.apache.spark.sql.Dataset
-import wine.WineDataLoader.loadWineFile
+import wine.WineDataLoader.loadWine
 
 
 object WineKmean {
@@ -10,7 +10,7 @@ object WineKmean {
   }
 
   def kMenaTry = {
-    val dataFrame = loadWineFile("concatFile/allWine.csv")
+    val dataFrame = loadWine()
 
     val encoder = org.apache.spark.sql.Encoders.product[WineInfo]
     val dataset: Dataset[WineInfo] = dataFrame.as[WineInfo](encoder)
