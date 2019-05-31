@@ -21,7 +21,10 @@ object WineDataLoader {
   }
 
   def loadWine(): DataFrame = loadWineFile(FileNames.WINE_MERGE.pathName())
+  def loadRegionLatLong(): DataFrame = loadFile(FileNames.REGION_LAT_LONG)
   def loadRegion(): DataFrame = loadFile(FileNames.REGION)
+
+
 
   private def generateRegioFile(allDistinct: Dataset[Row]): Unit = {
 
