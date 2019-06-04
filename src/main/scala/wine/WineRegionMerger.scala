@@ -12,16 +12,18 @@ object WineRegionMerger {
   def mergeRegion() = {
     val dataFrameWine: DataFrame = generateTableWine
     var dataFrameRegion: DataFrame = generateTableRegion
+    val dataFrameRegionWithLatLon = generateTableRegionWithLatLon
 
     val allData = sql(
       """
-          SELECT wine.id, region.index as id_region,
+          SELECT wine.id, region.index as id_region, regionLatLon.lat, regionLatLon.lon,
                  wine.country, wine.description, wine.designation,
                  wine.points, wine.price, wine.province,
                  wine.region_1, wine.region_2, wine.variety,
                  wine.winery
             FROM wine
            INNER JOIN region ON region.indexRegion = wine.indexRegion
+           INNER JOIN regionLatLon ON regionLatLon.id = region.index
            ORDER BY wine.id
       """)
 
@@ -32,6 +34,12 @@ object WineRegionMerger {
     println("Nb row in wine: " + dataFrameWine.count())
     println("Nb row in merge: " + allData.count())
     allData
+  }
+
+  private def generateTableRegionWithLatLon = {
+    var dataFrameRegion = loadRegionLatLong()
+    dataFrameRegion.createOrReplaceTempView("regionLatLon")
+    dataFrameRegion
   }
 
   private def generateTableRegion = {
