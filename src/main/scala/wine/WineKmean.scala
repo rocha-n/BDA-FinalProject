@@ -4,7 +4,7 @@ import org.apache.spark.ml.clustering.KMeans
 import org.apache.spark.sql.Dataset
 import wine.WineDataLoader.loadWine
 
-
+//N'est pas utilisé
 object WineKmean {
   case class WineInfo(country: String, description: String, points: String, price: String, province: String, region_1: String, region_2: String, variety: String, winery: String) {
   }

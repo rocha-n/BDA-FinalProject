@@ -8,7 +8,8 @@ import wine.Spark.{loadFile, sql}
 object SqlExecutor {
 
   def executeALlSql(): Unit = {
-    generateTable(WINE_WITH_INDEX_REGION);
+    generateTable(WINE_WITH_LAT_AND_LON);
+    println("Witch is the region and variety with most test")
 
     sql(
       """
@@ -26,9 +27,10 @@ object SqlExecutor {
       .withColumn("stddev_price", col("stddev_price").cast(DecimalType(10, 2)))
       .show(truncate = false)
 
+    println("With the min point")
     sql(
       """
-          SELECT wine.country, wine.province, wine.region_1, wine.region_2,
+          SELECT wine.country, wine.province,
                  wine.variety, count(wine.id_region) as  nbTest
             FROM wine
            WHERE wine.points = (SELECT MIN(w.points) FROM wine as w)
@@ -37,15 +39,19 @@ object SqlExecutor {
            ORDER BY nbTest desc
       """).show(truncate = false)
 
+    println("Witch is the country with most test")
+
+    println("With the max point")
     sql(
       """
-          SELECT wine.country, wine.points, wine.id_region, wine.price
+          SELECT wine.country, wine.points, wine.province, wine.price
             FROM wine
            WHERE wine.points = (SELECT MAX(w.points) FROM wine as w)
              AND PRICE IS NOT NULL
            ORDER BY wine.price asc
       """).show(truncate = false)
 
+    println("Count points given")
     sql(
       """
           SELECT wine.points, count(wine.points)

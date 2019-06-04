@@ -27,7 +27,7 @@ object WineRegionMerger {
            ORDER BY wine.id
       """)
 
-    saveAsCsv(allData, WINE_WITH_INDEX_REGION)
+    saveAsCsv(allData, WINE_WITH_LAT_AND_LON)
 
     allData.show(truncate = false)
     println("Nb row in region: " + dataFrameRegion.count())
