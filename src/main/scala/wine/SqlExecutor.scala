@@ -9,7 +9,24 @@ object SqlExecutor {
 
   def executeALlSql(): Unit = {
     generateTable(WINE_WITH_SOLAR);
-
+    println("Points vs radiation")
+    sql(
+      """
+          SELECT wine.points,
+                 count(wine.country) as nbTested,
+                 MAX(wine.radiationAvg) as max_radiation,
+                 MIN(wine.radiationAvg) as min_radiation,
+                 STDDEV(wine.radiationAvg) as stddev_radiation,
+                 AVG(wine.radiationAvg) as avg_radiation
+            FROM wine
+           GROUP BY wine.points
+           ORDER BY wine.points
+      """)
+      .withColumn("max_radiation", col("max_radiation").cast(DecimalType(10, 2)))
+      .withColumn("min_radiation", col("min_radiation").cast(DecimalType(10, 2)))
+      .withColumn("avg_radiation", col("avg_radiation").cast(DecimalType(10, 2)))
+      .withColumn("stddev_radiation", col("stddev_radiation").cast(DecimalType(10, 2)))
+      .show(100, truncate = false)
     println("Variety")
     sql(
       """
@@ -98,7 +115,7 @@ object SqlExecutor {
     println("Country with the most radiation")
     sql(
       """
-          SELECT wine.country, AVG(wine.radiationAvg) as radiation
+          SELECT wine.country, AVG(wine.radiationAvg) as radiation, count(wine.country) as nbTest
             FROM wine
            GROUP BY wine.country
            ORDER BY radiation desc

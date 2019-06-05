@@ -148,9 +148,173 @@ root
  |-- variety: string (nullable = true)  
  |-- winery: string (nullable = true)  
 
+## With the max point
+|country  |points|province  |price|radiation|
+|---------|------|----------|-----|---------|
+|US       |100   |Oregon    |65.0 |12.66    |
+|US       |100   |Washington|80.0 |16.56    |
+|US       |100   |Washington|80.0 |16.56    |
+|US       |100   |California|100.0|18.57    |
+|France   |100   |Bordeaux  |150.0|15.81    |
+|Italy    |100   |Tuscany   |195.0|19.14    |
+|US       |100   |California|200.0|18.57    |
+|Italy    |100   |Tuscany   |210.0|19.14    |
+|US       |100   |California|215.0|18.57    |
+|US       |100   |California|245.0|18.57    |
+|France   |100   |Champagne |250.0|12.03    |
+|France   |100   |Champagne |259.0|12.03    |
+|Italy    |100   |Tuscany   |270.0|15.23    |
+|Australia|100   |Victoria  |300.0|18.35    |
+|Australia|100   |Victoria  |350.0|18.35    |
+|France   |100   |Bordeaux  |359.0|15.81    |
+|Portugal |100   |Douro     |450.0|14.81    |
+|US       |100   |California|450.0|18.57    |
+|Italy    |100   |Tuscany   |460.0|14.46    |
+|Italy    |100   |Tuscany   |550.0|15.23    |
+
+## With the min point
+|country  |province        |radiation|variety           |nbTest|
+|---------|----------------|---------|------------------|------|
+|Argentina|Mendoza Province|21.75    |Malbec            |23    |
+|Argentina|Mendoza Province|21.75    |Cabernet Sauvignon|12    |
+|Argentina|Mendoza Province|21.75    |Chardonnay        |10    |
+|US       |California      |18.57    |Zinfandel         |10    |
+|US       |California      |18.57    |Zinfandel         |10    |
+|US       |California      |18.57    |Cabernet Sauvignon|9     |
+|US       |California      |18.57    |Red Blend         |8     |
+|Spain    |Northern Spain  |14.49    |Tempranillo       |8     |
+|US       |California      |18.57    |Merlot            |7     |
+|US       |California      |18.57    |Zinfandel         |7     |
+|US       |California      |18.35    |Zinfandel         |7     |
+|Spain    |Catalonia       |13.87    |Sparkling Blend   |7     |
+|Spain    |Central Spain   |19.14    |Tempranillo       |6     |
+|US       |California      |18.57    |Chardonnay        |6     |
+|Argentina|Mendoza Province|21.75    |Merlot            |6     |
+|Spain    |Northern Spain  |14.49    |Viura             |6     |
+|US       |California      |18.35    |Cabernet Sauvignon|5     |
+|Chile    |Central Valley  |21.75    |Sauvignon Blanc   |5     |
+|US       |California      |18.35    |Petite Sirah      |5     |
+|US       |California      |18.57    |Cabernet Sauvignon|5     |
+
+## Points vs radiation
+|points|nbTested|max_radiation|min_radiation|stddev_radiation|avg_radiation|
+|------|--------|-------------|-------------|----------------|-------------|
+|80    |766     |21.75        |10.65        |2.84            |18.00        |
+|81    |1269    |21.75        |9.54         |3.00            |17.62        |
+|82    |3316    |22.63        |9.54         |2.70            |17.56        |
+|83    |5180    |22.63        |9.54         |2.94            |17.25        |
+|84    |9903    |22.63        |9.54         |2.90            |17.04        |
+|85    |13027   |22.63        |9.54         |2.95            |16.64        |
+|86    |16653   |22.63        |9.54         |2.90            |16.61        |
+|87    |22138   |22.63        |9.54         |2.84            |16.52        |
+|88    |21566   |22.63        |9.54         |2.86            |16.26        |
+|89    |15517   |22.63        |9.54         |2.96            |15.96        |
+|90    |19405   |22.63        |9.54         |2.89            |16.15        |
+|91    |13879   |22.63        |9.54         |2.86            |16.08        |
+|92    |11798   |21.75        |9.54         |2.87            |16.12        |
+|93    |8046    |21.75        |9.54         |2.89            |15.93        |
+|94    |4613    |21.75        |9.54         |2.91            |15.81        |
+|95    |2068    |21.75        |9.54         |2.92            |15.62        |
+|96    |754     |21.75        |10.26        |2.90            |15.71        |
+|97    |339     |21.75        |9.54         |2.83            |15.78        |
+|98    |121     |19.14        |10.65        |2.61            |16.00        |
+|99    |42      |19.14        |12.03        |2.69            |15.67        |
+|100   |26      |19.14        |12.03        |2.69            |16.05        |
+
+
+## Country with the most radiation
+|country               |radiation|nbTest|
+|----------------------|---------|------|
+|Egypt                 |21.88    |3     |
+|Peru                  |21.75    |16    |
+|Argentina             |19.96    |5491  |
+|India                 |19.42    |9     |
+|US-France             |19.14    |1     |
+|South Korea           |19.14    |2     |
+|Cyprus                |18.89    |19    |
+|Israel                |18.89    |596   |
+|Morocco               |18.78    |26    |
+|South Africa          |18.75    |2192  |
+|Mexico                |18.67    |89    |
+|Australia             |18.21    |4407  |
+|Chile                 |17.62    |6134  |
+|US                    |17.50    |71732 |
+|Lebanon               |17.38    |42    |
+|Brazil                |17.35    |57    |
+|Tunisia               |17.26    |2     |
+|Portugal              |16.69    |6913  |
+|Uruguay               |16.47    |142   |
+|Montenegro            |16.16    |1     |
+|Greece                |16.00    |750   |
+|Spain                 |15.98    |8832  |
+|Italy                 |15.93    |25012 |
+|Turkey                |15.77    |88    |
+|China                 |15.13    |3     |
+|Japan                 |15.13    |1     |
+|Romania               |15.02    |156   |
+|Bulgaria              |14.82    |151   |
+|Switzerland           |14.76    |7     |
+|Albania               |14.41    |1     |
+|New Zealand           |13.92    |2589  |
+|France                |13.79    |27223 |
+|Serbia                |13.72    |11    |
+|Macedonia             |13.28    |18    |
+|Moldova               |13.19    |77    |
+|Armenia               |13.10    |2     |
+|Slovenia              |12.76    |95    |
+|Croatia               |12.55    |94    |
+|Canada                |12.54    |274   |
+|Georgia               |12.42    |86    |
+|Bosnia and Herzegovina|12.25    |3     |
+|Slovakia              |12.18    |2     |
+|Austria               |12.07    |3966  |
+|Hungary               |11.81    |210   |
+|England               |11.74    |64    |
+|Germany               |11.54    |2794  |
+|Czech Republic        |11.51    |14    |
+|Ukraine               |11.01    |17    |
+|Luxembourg            |10.68    |8     |
+|Lithuania             |10.13    |4     |
+
+## Variety th most tested
+
+|variety                      |radiation|nbTested|avg_points|max_radiation|min_radiation|stddev_radiation|max_price|min_price|max_points|min_points|stddev_points|stddev_price|
+|-----------------------------|---------|--------|----------|-------------|-------------|----------------|---------|---------|----------|----------|-------------|------------|
+|Pinot Noir                   |16.08    |16887   |89.18     |21.75        |9.54         |3.00            |2500.0   |5.0      |100       |80        |3.23         |45.24       |
+|Chardonnay                   |16.64    |15706   |88.12     |22.63        |9.54         |3.04            |2013.0   |4.0      |100       |80        |3.31         |42.68       |
+|Cabernet Sauvignon           |18.06    |13349   |88.39     |22.63        |9.54         |2.12            |625.0    |4.0      |100       |80        |3.44         |39.35       |
+|Red Blend                    |16.71    |11272   |88.25     |22.63        |9.54         |2.42            |500.0    |5.0      |100       |80        |2.91         |30.57       |
+|Bordeaux-style Red Blend     |15.12    |9034    |89.23     |21.75        |9.94         |2.91            |3300.0   |7.0      |100       |80        |3.20         |90.97       |
+|Sauvignon Blanc              |16.82    |6879    |87.14     |22.63        |10.65        |3.15            |140.0    |5.0      |96        |80        |2.73         |9.57        |
+|Riesling                     |13.33    |6630    |89.10     |21.75        |9.54         |3.04            |775.0    |5.0      |98        |80        |2.97         |41.07       |
+|Syrah                        |17.46    |5889    |88.90     |21.75        |11.15        |2.14            |750.0    |4.0      |100       |80        |3.27         |29.24       |
+|Merlot                       |17.38    |4781    |86.80     |22.63        |11.01        |2.31            |625.0    |4.0      |100       |80        |3.09         |29.28       |
+|Rosé                         |16.06    |3926    |86.70     |22.63        |9.54         |2.45            |800.0    |5.0      |96        |80        |2.57         |15.78       |
+|Zinfandel                    |18.64    |3869    |87.32     |21.75        |12.66        |1.06            |100.0    |4.0      |97        |80        |3.27         |12.04       |
+|Sangiovese                   |15.91    |3650    |88.34     |21.75        |12.64        |1.95            |800.0    |6.0      |100       |80        |2.83         |39.08       |
+|Malbec                       |18.35    |3459    |87.78     |22.63        |11.15        |3.64            |400.0    |4.0      |97        |80        |3.14         |26.28       |
+|Nebbiolo                     |14.41    |3127    |90.32     |21.75        |12.52        |0.87            |595.0    |12.0     |99        |80        |2.72         |45.96       |
+|White Blend                  |16.24    |3111    |87.26     |22.63        |9.54         |2.65            |375.0    |4.0      |97        |80        |2.81         |16.85       |
+|Portuguese Red               |16.27    |2902    |88.81     |19.14        |14.34        |1.32            |450.0    |4.0      |100       |80        |2.96         |24.62       |
+|Sparkling Blend              |16.08    |2637    |87.89     |22.63        |9.54         |2.76            |250.0    |5.0      |98        |80        |2.97         |20.90       |
+|Tempranillo                  |16.09    |2505    |87.13     |21.75        |11.16        |1.76            |600.0    |4.0      |97        |80        |3.20         |35.40       |
+|Rhône-style Red Blend        |16.53    |1872    |88.88     |20.64        |11.15        |2.08            |500.0    |7.0      |98        |80        |2.87         |23.56       |
+|Champagne Blend              |12.75    |1815    |89.65     |22.63        |11.15        |2.02            |600.0    |7.0      |100       |80        |3.07         |62.58       |
+|Pinot Gris                   |13.79    |1753    |88.21     |22.63        |9.54         |2.63            |269.0    |7.0      |97        |80        |2.70         |16.03       |
+|Shiraz                       |18.20    |1681    |88.51     |22.63        |11.16        |1.48            |850.0    |5.0      |99        |80        |3.22         |57.16       |
+|Cabernet Franc               |16.31    |1673    |87.93     |21.75        |11.15        |2.58            |180.0    |9.0      |98        |80        |2.85         |20.81       |
+|Grüner Veltliner             |12.10    |1515    |89.83     |19.14        |10.73        |1.91            |1100.0   |9.0      |96        |82        |2.38         |34.44       |
+|Bordeaux-style White Blend   |14.49    |1446    |89.07     |21.75        |12.33        |2.55            |1000.0   |6.0      |100       |80        |3.41         |83.48       |
+|Pinot Grigio                 |15.59    |1433    |86.03     |22.63        |9.54         |2.95            |70.0     |4.0      |92        |80        |2.11         |6.63        |
+|Viognier                     |17.31    |1424    |87.51     |21.88        |11.15        |2.09            |140.0    |5.0      |96        |80        |2.94         |14.62       |
+|Portuguese White             |16.09    |1313    |87.04     |19.14        |14.34        |1.33            |95.0     |5.0      |95        |80        |2.44         |9.45        |
+|Gewürztraminer               |13.67    |1281    |88.31     |21.75        |9.54         |2.89            |210.0    |6.0      |96        |80        |2.86         |17.99       |
+|Corvina, Rondinella, Molinara|18.88    |1263    |88.60     |19.14        |12.89        |1.24            |535.0    |8.0      |96        |80        |2.62         |44.36       |
+
+
 ## Witch is best variety
 
-Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stddev|Number tested|Row number
+Variety                             | Points mean | Points stddev| Price mean|Price min|Price max|Price stddev|Number tested|Row number
 ----------------------------------- | ----------- | ------------- | ---------- | --------- | --------- | ------------ | -------------|---------- 
 |Picolit                            |90.94      |2.41         |72.00     |19.0     |230.0    |41.94       |33           |1         |
 |Tokaji                             |90.71      |2.15         |74.04     |13.0     |544.0    |78.08       |51           |2         |
@@ -202,56 +366,6 @@ Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stdd
 |Pinot Meunier                      |88.98      |2.49         |44.13     |9.0      |145.0    |27.15       |49           |48        |
 |Alicante Bouschet                  |88.97      |2.66         |30.20     |7.0      |150.0    |27.09       |63           |49        |
 |Kerner                             |88.92      |2.02         |23.20     |18.0     |44.0     |5.64        |26           |50        |
-|Syrah                              |88.90      |3.27         |37.90     |4.0      |750.0    |29.24       |5889         |51        |
-|Rhône-style Red Blend              |88.88      |2.87         |33.57     |7.0      |500.0    |23.56       |1872         |52        |
-|Mourvèdre                          |88.85      |3.06         |33.95     |13.0     |95.0     |12.12       |273          |53        |
-|Turbiana                           |88.85      |2.01         |23.46     |9.0      |48.0     |7.13        |148          |54        |
-|Touriga Nacional                   |88.83      |2.84         |28.67     |7.0      |100.0    |17.82       |242          |55        |
-|Palomino                           |88.83      |2.12         |42.13     |13.0     |175.0    |46.91       |23           |56        |
-|Portuguese Red                     |88.81      |2.96         |24.78     |4.0      |450.0    |24.62       |2902         |57        |
-|Alvarinho                          |88.77      |2.32         |18.86     |9.0      |75.0     |8.71        |160          |58        |
-|Carignan                           |88.73      |2.88         |43.18     |10.0     |770.0    |83.47       |93           |59        |
-|Grenache                           |88.66      |3.01         |34.91     |6.0      |230.0    |19.80       |794          |60        |
-|Mencía                             |88.62      |2.83         |29.49     |8.0      |113.0    |20.82       |221          |61        |
-|Corvina, Rondinella, Molinara      |88.60      |2.62         |47.25     |8.0      |535.0    |44.36       |1263         |62        |
-|Grenache Blanc                     |88.60      |2.06         |24.78     |11.0     |40.0     |4.69        |146          |63        |
-|Auxerrois                          |88.60      |1.75         |22.52     |15.0     |32.0     |4.38        |30           |64        |
-|G-S-M                              |88.59      |2.88         |32.86     |8.0      |85.0     |14.10       |222          |65        |
-|Pinot Nero                         |88.59      |2.10         |33.79     |9.0      |150.0    |17.08       |199          |66        |
-|Cabernet Sauvignon-Syrah           |88.56      |3.35         |34.47     |8.0      |100.0    |20.67       |146          |67        |
-|Teroldego                          |88.53      |2.98         |31.00     |14.0     |72.0     |13.01       |36           |68        |
-|Marsanne                           |88.53      |3.00         |41.40     |10.0     |260.0    |37.68       |119          |69        |
-|Shiraz                             |88.51      |3.22         |37.49     |5.0      |850.0    |57.16       |1681         |70        |
-|Corvina                            |88.50      |2.98         |41.54     |10.0     |95.0     |31.20       |26           |71        |
-|Muscat                             |88.49      |3.35         |29.57     |7.0      |350.0    |42.24       |188          |72        |
-|Merlot-Cabernet Franc              |88.48      |2.40         |38.38     |20.0     |80.0     |12.40       |33           |73        |
-|Cinsault                           |88.46      |2.51         |25.22     |8.0      |58.0     |9.52        |46           |74        |
-|Lagrein                            |88.44      |1.94         |32.86     |10.0     |70.0     |13.04       |86           |75        |
-|Gelber Muskateller                 |88.44      |1.79         |25.24     |16.0     |99.0     |16.03       |41           |76        |
-|White Riesling                     |88.39      |3.78         |20.16     |6.0      |60.0     |11.96       |31           |77        |
-|Rhône-style White Blend            |88.39      |2.51         |32.33     |8.0      |253.0    |25.05       |525          |78        |
-|Cabernet Sauvignon                 |88.39      |3.44         |45.82     |4.0      |625.0    |39.35       |13349        |79        |
-|Chenin Blanc                       |88.37      |2.92         |22.78     |5.0      |159.0    |17.25       |814          |80        |
-|Pinot Bianco                       |88.36      |1.85         |24.46     |10.0     |165.0    |14.44       |183          |81        |
-|Sangiovese                         |88.34      |2.83         |42.06     |6.0      |800.0    |39.08       |3650         |82        |
-|Prugnolo Gentile                   |88.33      |2.64         |39.71     |12.0     |237.0    |38.87       |75           |83        |
-|Roussanne                          |88.32      |2.75         |27.76     |13.0     |100.0    |12.36       |214          |84        |
-|Gewürztraminer                     |88.31      |2.86         |25.85     |6.0      |210.0    |17.99       |1281         |85        |
-|Sylvaner                           |88.31      |2.18         |22.24     |12.0     |40.0     |6.30        |54           |86        |
-|Syrah-Grenache                     |88.26      |3.03         |27.13     |6.0      |95.0     |15.34       |70           |87        |
-|Red Blend                          |88.25      |2.91         |35.67     |5.0      |500.0    |30.57       |11272        |88        |
-|Tannat                             |88.24      |3.49         |31.59     |9.0      |200.0    |24.43       |203          |89        |
-|Gros Manseng                       |88.24      |1.71         |17.67     |12.0     |26.0     |4.74        |25           |90        |
-|Petit Verdot                       |88.23      |2.68         |38.57     |10.0     |199.0    |18.90       |313          |91        |
-|Carignane                          |88.23      |2.66         |26.66     |11.0     |42.0     |7.46        |39           |92        |
-|Touriga Nacional-Cabernet Sauvignon|88.21      |2.67         |14.53     |7.0      |40.0     |7.36        |33           |93        |
-|Pinot Gris                         |88.21      |2.70         |22.93     |7.0      |269.0    |16.03       |1753         |94        |
-|Sémillon                           |88.19      |3.12         |23.38     |8.0      |80.0     |11.43       |226          |95        |
-|Charbono                           |88.18      |2.64         |32.60     |16.0     |45.0     |6.44        |40           |96        |
-|Melon                              |88.17      |2.49         |16.82     |8.0      |80.0     |7.40        |288          |97        |
-|Greco                              |88.15      |2.19         |25.84     |10.0     |60.0     |10.20       |131          |98        |
-|Malbec-Cabernet Sauvignon          |88.13      |3.21         |38.07     |10.0     |169.0    |37.44       |72           |99        |
-
 
 ## Witch country as most variety 
 
@@ -397,56 +511,8 @@ Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stdd
 |France  |Chardonnay                   |89.37      |3.17         |61.26     |6.0      |1400.0   |3485         |79.02       |48        |
 |Italy   |Carignano                    |89.36      |2.11         |36.78     |11.0     |91.0     |44           |21.87       |49        |
 |Portugal|Alicante Bouschet            |89.34      |2.55         |31.09     |7.0      |150.0    |50           |29.90       |50        |
-|Italy   |Cabernet Sauvignon           |89.33      |2.65         |48.98     |8.0      |240.0    |181          |36.24       |51        |
-|France  |Gewürztraminer               |89.29      |3.02         |35.55     |10.0     |210.0    |541          |23.45       |52        |
-|US      |Syrah-Petite Sirah           |89.24      |4.00         |39.52     |24.0     |85.0     |21           |13.36       |53        |
-|Portugal|Port                         |89.20      |3.29         |60.86     |11.0     |1000.0   |969          |89.07       |54        |
-|Germany |Spätburgunder                |89.17      |3.30         |58.35     |14.0     |181.0    |84           |35.16       |55        |
-|Italy   |Aglianico                    |89.16      |2.43         |37.52     |6.0      |180.0    |441          |23.08       |56        |
-|Austria |Sauvignon Blanc              |89.16      |2.28         |30.01     |12.0     |70.0     |158          |13.13       |57        |
-|US      |Cinsault                     |89.16      |1.95         |27.19     |18.0     |40.0     |32           |5.50        |58        |
-|France  |Muscat                       |89.14      |2.73         |29.94     |10.0     |68.0     |59           |12.72       |59        |
-|Austria |Weissburgunder               |89.13      |2.22         |24.68     |11.0     |50.0     |47           |9.38        |60        |
-|France  |Bordeaux-style White Blend   |89.09      |3.44         |34.43     |6.0      |1000.0   |1387         |86.61       |61        |
-|France  |Bordeaux-style Red Blend     |89.07      |3.26         |41.58     |7.0      |3300.0   |6175         |null        |62        |
-|Austria |Sparkling Blend              |89.04      |2.56         |29.77     |15.0     |55.0     |49           |9.14        |63        |
-|US      |Syrah                        |89.01      |3.33         |36.70     |5.0      |750.0    |4506         |20.64       |64        |
-|France  |Chenin Blanc                 |89.01      |3.24         |27.88     |9.0      |159.0    |393          |20.86       |65        |
-|Italy   |Syrah                        |89.01      |2.54         |47.39     |7.0      |300.0    |194          |53.37       |66        |
-|Austria |Pinot Blanc                  |89.00      |2.29         |24.08     |14.0     |65.0     |33           |12.57       |67        |
-|Portugal|Touriga Nacional             |89.00      |2.77         |28.55     |7.0      |100.0    |224          |18.31       |68        |
-|Canada  |Cabernet Franc               |89.00      |1.95         |46.43     |20.0     |100.0    |21           |27.52       |69        |
-|Canada  |Chardonnay                   |88.93      |1.82         |26.79     |15.0     |50.0     |28           |7.50        |70        |
-|US      |Sparkling Blend              |88.93      |3.16         |35.73     |5.0      |250.0    |837          |24.86       |71        |
-|US      |Rhône-style Red Blend        |88.90      |3.15         |36.05     |9.0      |125.0    |838          |15.23       |72        |
-|Italy   |Turbiana                     |88.85      |2.01         |23.46     |9.0      |48.0     |148          |7.13        |73        |
-|US      |Cabernet Sauvignon           |88.83      |3.47         |52.75     |4.0      |625.0    |10057        |40.44       |74        |
-|Canada  |Pinot Noir                   |88.83      |2.60         |33.83     |20.0     |50.0     |24           |9.59        |75        |
-|Italy   |Kerner                       |88.83      |2.08         |23.35     |18.0     |44.0     |24           |5.77        |76        |
-|France  |Rhône-style Red Blend        |88.82      |2.63         |31.53     |7.0      |500.0    |962          |29.36       |77        |
-|Italy   |Red Blend                    |88.81      |2.57         |40.02     |6.0      |500.0    |4280         |37.17       |78        |
-|Portugal|Portuguese Red               |88.81      |2.96         |24.78     |4.0      |450.0    |2902         |24.62       |79        |
-|Portugal|Alvarinho                    |88.80      |2.30         |18.86     |9.0      |75.0     |159          |8.74        |80        |
-|Canada  |Riesling                     |88.79      |2.94         |32.00     |12.0     |90.0     |67           |21.64       |81        |
-|France  |Viognier                     |88.78      |3.21         |50.39     |9.0      |140.0    |96           |36.72       |82        |
-|US      |Syrah-Grenache               |88.77      |3.04         |34.15     |14.0     |95.0     |39           |15.13       |83        |
-|US      |Grenache                     |88.77      |3.04         |34.26     |9.0      |120.0    |613          |13.97       |84        |
-|US      |Mourvèdre                    |88.74      |3.11         |33.64     |15.0     |90.0     |249          |10.81       |85        |
-|Italy   |Lagrein                      |88.69      |1.36         |32.71     |10.0     |70.0     |75           |13.49       |86        |
-|Italy   |Sangiovese                   |88.68      |2.72         |45.71     |6.0      |800.0    |3028         |42.26       |87        |
-|US      |Sémillon                     |88.68      |3.02         |23.73     |8.0      |80.0     |138          |11.89       |88        |
-|US      |Grenache Blanc               |88.67      |2.04         |24.67     |17.0     |40.0     |132          |4.16        |89        |
-|Italy   |Gewürztraminer               |88.62      |1.94         |32.67     |18.0     |108.0    |58           |14.53       |90        |
-|Italy   |Sparkling Blend              |88.61      |2.33         |40.01     |9.0      |170.0    |469          |22.83       |91        |
-|Italy   |Pinot Nero                   |88.60      |2.10         |33.65     |9.0      |150.0    |198          |17.02       |92        |
-|Italy   |Corvina, Rondinella, Molinara|88.60      |2.62         |47.25     |8.0      |535.0    |1263         |44.36       |93        |
-|Germany |Pinot Blanc                  |88.59      |1.76         |21.14     |12.0     |40.0     |22           |6.88        |94        |
-|US      |Bordeaux-style White Blend   |88.59      |2.81         |29.20     |17.0     |65.0     |54           |9.89        |95        |
-|Portugal|Syrah                        |88.59      |2.09         |30.08     |8.0      |110.0    |63           |19.92       |96        |
-|US      |G-S-M                        |88.59      |3.16         |35.07     |12.0     |85.0     |162          |13.41       |97        |
-|US      |Merlot-Cabernet Franc        |88.57      |2.56         |38.13     |22.0     |48.0     |23           |8.50        |98        |
-|US      |Merlot-Cabernet Sauvignon    |88.50      |3.06         |51.83     |9.0      |96.0     |24           |31.18       |99        |
-|Italy   |Corvina                      |88.50      |2.98         |41.54     |10.0     |95.0     |26           |31.20       |100       |
+
+
 
 ## Witch is variety the most tested in country
 
@@ -502,56 +568,7 @@ Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stdd
 |Spain       |Tempranillo Blend            |810          |35.45     |7.0      |450.0    |38.24       |48        |
 |US          |White Blend                  |804          |21.41     |4.0      |85.0     |11.20       |49        |
 |Argentina   |Cabernet Sauvignon           |794          |18.27     |5.0      |230.0    |16.01       |50        |
-|New Zealand |Pinot Noir                   |790          |33.17     |11.0     |130.0    |17.59       |51        |
-|Chile       |Chardonnay                   |751          |14.77     |5.0      |95.0     |7.46        |52        |
-|Chile       |Carmenère                    |742          |20.36     |6.0      |235.0    |23.64       |53        |
-|Austria     |Riesling                     |731          |38.31     |10.0     |145.0    |19.64       |54        |
-|Australia   |Chardonnay                   |657          |22.25     |5.0      |200.0    |20.80       |55        |
-|Italy       |Barbera                      |643          |25.79     |9.0      |163.0    |14.52       |56        |
-|US          |Malbec                       |628          |34.35     |10.0     |150.0    |14.76       |57        |
-|Spain       |Sparkling Blend              |625          |18.89     |7.0      |150.0    |13.14       |58        |
-|US          |Grenache                     |613          |34.26     |9.0      |120.0    |13.97       |59        |
-|US          |Sangiovese                   |606          |26.97     |9.0      |150.0    |12.17       |60        |
-|US          |Gewürztraminer               |546          |18.50     |6.0      |60.0     |7.04        |61        |
-|France      |Gewürztraminer               |541          |35.55     |10.0     |210.0    |23.45       |62        |
-|Australia   |Cabernet Sauvignon           |532          |33.34     |5.0      |500.0    |34.62       |63        |
-|US          |Pinot Grigio                 |511          |14.24     |5.0      |55.0     |5.71        |64        |
-|France      |Pinot Gris                   |509          |35.33     |11.0     |269.0    |25.81       |65        |
-|France      |Malbec                       |505          |34.49     |7.0      |400.0    |38.50       |66        |
-|Chile       |Red Blend                    |499          |38.54     |8.0      |400.0    |33.91       |67        |
-|Italy       |Chardonnay                   |484          |31.94     |7.0      |130.0    |19.80       |68        |
-|Spain       |Albariño                     |477          |20.73     |10.0     |110.0    |9.63        |69        |
-|Italy       |Nero d'Avola                 |474          |23.61     |6.0      |100.0    |15.36       |70        |
-|Italy       |Sparkling Blend              |469          |40.01     |9.0      |170.0    |22.83       |71        |
-|Argentina   |Chardonnay                   |446          |15.85     |5.0      |120.0    |10.61       |72        |
-|Italy       |Aglianico                    |441          |37.52     |6.0      |180.0    |23.08       |73        |
-|Italy       |Prosecco                     |438          |18.68     |9.0      |55.0     |6.58        |74        |
-|France      |Sparkling Blend              |436          |21.37     |8.0      |60.0     |7.92        |75        |
-|Chile       |Merlot                       |422          |12.89     |5.0      |35.0     |4.45        |76        |
-|Chile       |Pinot Noir                   |422          |18.97     |7.0      |100.0    |10.34       |77        |
-|Spain       |Garnacha                     |414          |20.21     |5.0      |290.0    |27.67       |78        |
-|US          |Tempranillo                  |404          |31.99     |10.0     |100.0    |13.40       |79        |
-|France      |Chenin Blanc                 |393          |27.88     |9.0      |159.0    |20.86       |80        |
-|Spain       |White Blend                  |387          |19.40     |4.0      |95.0     |13.37       |81        |
-|France      |Syrah                        |369          |62.96     |7.0      |450.0    |66.93       |82        |
-|France      |Red Blend                    |369          |23.81     |5.0      |380.0    |34.90       |83        |
-|Spain       |Verdejo                      |364          |16.11     |6.0      |55.0     |6.80        |84        |
-|Italy       |Garganega                    |361          |20.44     |8.0      |63.0     |10.05       |85        |
-|Chile       |Syrah                        |358          |26.51     |6.0      |200.0    |25.14       |86        |
-|Argentina   |Torrontés                    |344          |13.04     |6.0      |36.0     |3.53        |87        |
-|US          |Meritage                     |338          |36.67     |9.0      |150.0    |17.99       |88        |
-|Italy       |Sauvignon                    |332          |26.04     |10.0     |95.0     |12.30       |89        |
-|Argentina   |Red Blend                    |331          |33.66     |7.0      |135.0    |21.97       |90        |
-|France      |White Blend                  |313          |18.40     |5.0      |70.0     |11.45       |91        |
-|US          |Barbera                      |302          |26.61     |10.0     |100.0    |10.26       |92        |
-|New Zealand |Chardonnay                   |300          |26.53     |10.0     |80.0     |12.14       |93        |
-|South Africa|Sauvignon Blanc              |294          |15.32     |6.0      |50.0     |5.59        |94        |
-|France      |Melon                        |286          |16.82     |8.0      |80.0     |7.43        |95        |
-|Italy       |Moscato                      |281          |19.19     |6.0      |90.0     |11.35       |96        |
-|US          |Rhône-style White Blend      |280          |27.59     |10.0     |72.0     |8.68        |97        |
-|Australia   |Riesling                     |270          |20.48     |5.0      |65.0     |8.89        |98        |
-|South Africa|Chardonnay                   |265          |21.11     |8.0      |80.0     |11.90       |99        |
-|Austria     |Blaufränkisch                |264          |33.32     |9.0      |129.0    |22.52       |100       |
+
 
 ## Witch country has the best variety ( top 20 )
 
@@ -578,6 +595,9 @@ Variety | Points mean | Points stddev| Price mean|Price min|Price max|Price stdd
 |Italy   |Nerello Mascalese     |89.67      |2.67         |40.04     |10.0     |225.0    |28.36       |135          |19        |
 |US      |Grüner Veltliner      |88.43      |1.89         |21.72     |12.0     |40.0     |6.12        |101          |20        |
 |US      |Nebbiolo              |88.13      |3.66         |36.95     |15.0     |90.0     |16.78       |61           |21        |
+
+
+
 
 <!-- ESSAIS INFRUCTUEUX
 select * from [xxxxx].[dbo].[wineWIP] where region_1 is not null and region_2 is not null
