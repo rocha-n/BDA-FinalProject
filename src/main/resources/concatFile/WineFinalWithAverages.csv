@@ -1,4 +1,4 @@
-id,lat,lon,radiationId,radiationAvg
+id_region,lat,lon,radiationId,radiationAvg
 1,42.3285528,-2.4674917,371,14.48833333
 2,44.6108408,7.9428448,274,14.3075
 3,-33.3117096,151.3120675,28,18.34666667

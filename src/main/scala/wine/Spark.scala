@@ -55,4 +55,10 @@ object Spark {
     val file = fs.globStatus(new Path(path + "part*"))(0).getPath.getName
     fs.rename(new Path(path + file), new Path(path + name))
   }
+
+  def generateTable(fileNameAndTableName: FileNameAndTableName) = {
+    var dataFrame = loadFile(fileNameAndTableName)
+    dataFrame.createOrReplaceTempView(fileNameAndTableName.tableName)
+    dataFrame
+  }
 }

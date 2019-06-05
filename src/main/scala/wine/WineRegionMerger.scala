@@ -4,7 +4,7 @@ import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.{col, concat_ws}
 import wine.Columns._
 import wine.FileNames._
-import wine.Spark.{addRowNumber, saveAsCsv, sql}
+import wine.Spark._
 import wine.WineDataLoader._
 
 object WineRegionMerger {
@@ -13,10 +13,11 @@ object WineRegionMerger {
     val dataFrameWine: DataFrame = generateTableWine
     var dataFrameRegion: DataFrame = generateTableRegion
     val dataFrameRegionWithLatLon = generateTableRegionWithLatLon
+    val dataFrameSolar = generateTable(FileNames.SOLAR_RADIATION);
 
     val allData = sql(
       """
-          SELECT wine.id, region.index as id_region, regionLatLon.lat, regionLatLon.lon,
+          SELECT wine.id, region.index as id_region, solar.radiationAvg,
                  wine.country, wine.description, wine.designation,
                  wine.points, wine.price, wine.province,
                  wine.region_1, wine.region_2, wine.variety,
@@ -24,16 +25,23 @@ object WineRegionMerger {
             FROM wine
            INNER JOIN region ON region.indexRegion = wine.indexRegion
            INNER JOIN regionLatLon ON regionLatLon.id = region.index
+           INNER JOIN solar ON solar.id_region = region.index
            ORDER BY wine.id
       """)
 
-    saveAsCsv(allData, WINE_WITH_LAT_AND_LON)
+    saveAsCsv(allData, WINE_WITH_SOLAR)
 
     allData.show(truncate = false)
     println("Nb row in region: " + dataFrameRegion.count())
     println("Nb row in wine: " + dataFrameWine.count())
     println("Nb row in merge: " + allData.count())
     allData
+  }
+
+  private def generateTableSolar = {
+    var dataFrameRegion = loadFile(FileNames.SOLAR_RADIATION)
+    dataFrameRegion.createOrReplaceTempView("regionLatLon")
+    dataFrameRegion
   }
 
   private def generateTableRegionWithLatLon = {

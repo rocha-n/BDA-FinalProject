@@ -3,67 +3,107 @@ package wine
 import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.types.DecimalType
 import wine.FileNames._
-import wine.Spark.{loadFile, sql}
+import wine.Spark.{generateTable, sql}
 
 object SqlExecutor {
 
   def executeALlSql(): Unit = {
-    generateTable(WINE_WITH_LAT_AND_LON);
-    println("Witch is the region and variety with most test")
+    generateTable(WINE_WITH_SOLAR);
 
+    println("Variety")
+    sql(
+      """
+          SELECT wine.variety,
+                 AVG(wine.radiationAvg) as radiation,
+                 count(wine.country) as nbTested,
+                 AVG(wine.points) as avg_points,
+                 MAX(wine.radiationAvg) as max_radiation, MIN(wine.radiationAvg) as min_radiation,
+                 STDDEV(wine.radiationAvg) as stddev_radiation,
+                 MAX(wine.price) as max_price, MIN(wine.price) as min_price,
+                 MAX(wine.points) as max_points, MIN(wine.points) as min_points,
+                 STDDEV(wine.points) as stddev_points, STDDEV(wine.price) as stddev_price
+            FROM wine
+           GROUP BY wine.variety
+           ORDER BY nbTested desc
+      """).withColumn("stddev_points", col("stddev_points").cast(DecimalType(10, 2)))
+      .withColumn("stddev_price", col("stddev_price").cast(DecimalType(10, 2)))
+      .withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
+      .withColumn("max_radiation", col("max_radiation").cast(DecimalType(10, 2)))
+      .withColumn("min_radiation", col("min_radiation").cast(DecimalType(10, 2)))
+      .withColumn("stddev_radiation", col("stddev_radiation").cast(DecimalType(10, 2)))
+      .withColumn("avg_points", col("avg_points").cast(DecimalType(10, 2)))
+      .show(30,truncate = false)
+
+    println("Witch is the region and variety with most test")
     sql(
       """
           SELECT wine.country, wine.province, wine.region_1, wine.region_2, wine.variety, wine.winery,
+                 AVG(wine.radiationAvg) as radiation,
                  count(wine.country) as nbTested,
+                 MAX(wine.radiationAvg) as max_radiation, MIN(wine.radiationAvg) as min_radiation,
+                 STDDEV(wine.radiationAvg) as stddev_radiation,
                  MAX(wine.price) as max_price, MIN(wine.price) as min_price,
                  MAX(wine.points) as max_points, MIN(wine.points) as min_points,
-                 STDDEV(wine.points) as stddev_points, STDDEV(wine.price) as stddev_price,
-                 wine.id_region
+                 STDDEV(wine.points) as stddev_points, STDDEV(wine.price) as stddev_price
             FROM wine
            GROUP BY wine.country, wine.province, wine.region_1, wine.region_2, wine.variety, wine.winery, wine.id_region
            ORDER BY nbTested desc
       """)
       .withColumn("stddev_points", col("stddev_points").cast(DecimalType(10, 2)))
       .withColumn("stddev_price", col("stddev_price").cast(DecimalType(10, 2)))
+      .withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
+      .withColumn("max_radiation", col("max_radiation").cast(DecimalType(10, 2)))
+      .withColumn("min_radiation", col("min_radiation").cast(DecimalType(10, 2)))
+      .withColumn("stddev_radiation", col("stddev_radiation").cast(DecimalType(10, 2)))
       .show(truncate = false)
 
     println("With the min point")
     sql(
       """
-          SELECT wine.country, wine.province,
+          SELECT wine.country, wine.province, AVG(wine.radiationAvg) as radiation,
                  wine.variety, count(wine.id_region) as  nbTest
             FROM wine
            WHERE wine.points = (SELECT MIN(w.points) FROM wine as w)
              AND PRICE IS NOT NULL
            GROUP BY wine.country, wine.province, wine.region_1, wine.region_2, wine.variety
            ORDER BY nbTest desc
-      """).show(truncate = false)
+      """).withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
+      .show(truncate = false)
 
     println("Witch is the country with most test")
 
     println("With the max point")
     sql(
       """
-          SELECT wine.country, wine.points, wine.province, wine.price
+          SELECT wine.country, wine.points, wine.province, wine.price, wine.radiationAvg as radiation
             FROM wine
            WHERE wine.points = (SELECT MAX(w.points) FROM wine as w)
              AND PRICE IS NOT NULL
            ORDER BY wine.price asc
-      """).show(truncate = false)
+      """)
+      .withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
+      .show(truncate = false)
 
     println("Count points given")
     sql(
       """
-          SELECT wine.points, count(wine.points)
+          SELECT wine.points, count(wine.points), AVG(wine.radiationAvg) as radiation
             FROM wine
            GROUP BY wine.points
            ORDER BY wine.points asc
-      """).show(100, truncate = false)
+      """).withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
+      .show(100, truncate = false)
+
+
+    println("Country with the most radiation")
+    sql(
+      """
+          SELECT wine.country, AVG(wine.radiationAvg) as radiation
+            FROM wine
+           GROUP BY wine.country
+           ORDER BY radiation desc
+      """).withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
+      .show(100, truncate = false)
   }
 
-  private def generateTable(fileNameAndTableName: FileNameAndTableName) = {
-    var dataFrame = loadFile(fileNameAndTableName)
-    dataFrame.createOrReplaceTempView(fileNameAndTableName.tableName)
-    dataFrame
-  }
 }

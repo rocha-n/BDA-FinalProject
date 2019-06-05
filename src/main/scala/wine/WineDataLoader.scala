@@ -26,6 +26,7 @@ object WineDataLoader {
 
 
 
+
   private def generateRegioFile(allDistinct: Dataset[Row]): Unit = {
 
     val region = addRowNumber(allDistinct.select(
