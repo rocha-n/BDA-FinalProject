@@ -129,29 +129,37 @@ So, between the null values removed at the first step, and the ones mentionned i
 
 We spent a bit of time searching for a replacement for OpenSolarDB, in order to have a full coverage of data. Finally, due to the nearly-insignificant proportion of data loss, we agreed on going forward with our current data. It seems absolutely acceptable from our point of view.
 
-//TODO: A chart of nb of wines / country, and maybe the ratings distributsion
+## Solar radiation
 
-## Démarche
-Pour la création des données, nous avons passé par la création de plusieurs fichiers.
-La création de fichiers n’a pas été facile réaliser nous somme aller voir sur stack overflow pour trouver la manière de pouvoir créer des fichiers csv. 
-Comme nous travaillons avec peu de données, il est possible de créer un seul fichier csv. 
-Si nous avions beaucoup de données, il aurait fallu premièrement travailler avec un autre type de fichier pour que cela soit plus rapide avec Spark et cela aurait aussi généré plusieurs fichiers.
-L’avantage d’un fichier CSV c’est qu’il peut être lu facilement par les humais.
-C’est pour cette raison que nous avons utilisé ce type de fichiers.
-Nous pouvons nous permettre de faire cela car la quantité de donnée n’est pas grande. 
-## Amélioration
-Nous n’avons pas l’année du vin, nous faisons donc une moyenne pour les notes et aussi pour le rayonnement de soleil. 
-Nous pensons qu’il aurait été bien d’avoir ces informations pour être plus précis. 
-Il serait donc intéressant de trouver d’autres donnée pour avoir l’année du vin et son évaluation.
+After the previous modifications for the wine files, we started working on the solar radiation part.
+Once in possession of the different files (one per country), we aggregated them, and search for incoherences.
+Then, we created an average value of radiation per region, and then pursued to do that for every country.
 
-## Conclusion des résulats
-Il est difficile de dire que le soleil à une grande importance, sauf s’il y a trop de soleil.
+After that, we needed to consiliate the radiation data with the wine region. So we had to match GPS coordinates with a geographical region. This operation is called *Geocaching*.
 
-### Matching regions with solar radiation
+As all APIs we found where not free, we decided to spam a website with queries and parse the results for grabbing the informaiton we were looking for. Not a very friendly method, but he couldn't see any other solution.
 
-# Divers information on wine
+Now that we could associate wines with GPS addresses, all that was left to do, data-wise, was to match the wine GPS adresses with the radiation locations GPS addresses, in order to association a radiation median value with each wine.
 
-## Data structur
+To do that, we used kNN. We used all the radiation points as centroids, and then threw in the wine locations.
+We were then able to obtain the solar irradiation values for each wine.
+
+Now that we had the data, we just had to write our code for obtaining anwers to our questions.
+
+## Results
+The radiation doesn't seem to have a big incidence on wine quality.
+But we see that there seems to be a threshold, after wich perceived quality starts to lower.
+
+
+## Future improvements
+As seen previously, we can conclude on the fact that solar radiation was no big impact, as long as there isn't too much of it.
+But for having more precise results, we would like to have the year of the wine, as well as the solar radiation per year.
+Furthermore, we also lost a lot of data due to incomplete, incorrect or inconsistent wine data. It would be great to find a better source for this specific data.
+Finally, if we could have a free Geocaching service, it would have enable us to process more data in the given time for this project. And more data means more precision.
+
+# Informations of wine and elements of answer
+
+## Data structure
 
 root  
  |-- country: string (nullable = true)  
@@ -165,7 +173,7 @@ root
  |-- variety: string (nullable = true)  
  |-- winery: string (nullable = true)  
 
-## With the max point
+## With the max points
 |country  |points|province  |price|radiation|
 |---------|------|----------|-----|---------|
 |US       |100   |Oregon    |65.0 |12.66    |
@@ -189,8 +197,7 @@ root
 |Italy    |100   |Tuscany   |460.0|14.46    |
 |Italy    |100   |Tuscany   |550.0|15.23    |
 
-
-## With the min point
+## With the min points
 |country  |province        |radiation|variety           |nbTest|
 |---------|----------------|---------|------------------|------|
 |Argentina|Mendoza Province|21.75    |Malbec            |23    |
@@ -239,30 +246,6 @@ root
 |99    |42      |19.14        |12.03        |2.69            |15.67        |
 |100   |26      |19.14        |12.03        |2.69            |16.05        |
 
-## Count points with information prices
-|points|count(points)|radiation|avg_price|stddev_price|max_price|min_price|
-|------|-------------|---------|---------|------------|---------|---------|
-|80    |766          |18.00    |16.94    |9.73        |80.0     |5.0      |
-|81    |1269         |17.62    |17.26    |14.36       |354.0    |5.0      |
-|82    |3316         |17.56    |18.91    |11.44       |150.0    |4.0      |
-|83    |5180         |17.25    |18.19    |11.84       |225.0    |4.0      |
-|84    |9903         |17.04    |19.33    |13.06       |225.0    |4.0      |
-|85    |13027        |16.64    |20.01    |13.17       |320.0    |4.0      |
-|86    |16653        |16.61    |22.06    |14.57       |495.0    |4.0      |
-|87    |22138        |16.52    |24.88    |17.72       |800.0    |5.0      |
-|88    |21566        |16.26    |28.49    |29.23       |3300.0   |6.0      |
-|89    |15517        |15.96    |32.13    |21.56       |500.0    |7.0      |
-|90    |19405        |16.15    |37.12    |24.11       |535.0    |5.0      |
-|91    |13879        |16.08    |43.34    |31.62       |2013.0   |7.0      |
-|92    |11798        |16.12    |51.69    |33.54       |750.0    |11.0     |
-|93    |8046         |15.93    |64.08    |45.40       |770.0    |12.0     |
-|94    |4613         |15.81    |81.23    |67.81       |1125.0   |13.0     |
-|95    |2068         |15.62    |108.37   |98.90       |973.0    |20.0     |
-|96    |754          |15.71    |150.02   |204.00      |2500.0   |20.0     |
-|97    |339          |15.78    |191.90   |199.79      |2000.0   |35.0     |
-|98    |121          |16.00    |222.64   |234.71      |1900.0   |50.0     |
-|99    |42           |15.67    |328.28   |391.02      |2300.0   |44.0     |
-|100   |26           |16.05    |452.04   |420.02      |1500.0   |65.0     |
 
 ## Country with the most radiation
 |country               |radiation|nbTest|
@@ -318,7 +301,7 @@ root
 |Luxembourg            |10.68    |8     |
 |Lithuania             |10.13    |4     |
 
-## Variety th most tested
+## Varieties the most tested
 
 |variety                      |radiation|nbTested|avg_points|max_radiation|min_radiation|stddev_radiation|max_price|min_price|max_points|min_points|stddev_points|stddev_price|
 |-----------------------------|---------|--------|----------|-------------|-------------|----------------|---------|---------|----------|----------|-------------|------------|
@@ -354,7 +337,7 @@ root
 |Corvina, Rondinella, Molinara|18.88    |1263    |88.60     |19.14        |12.89        |1.24            |535.0    |8.0      |96        |80        |2.62         |44.36       |
 
 
-## Witch is best variety
+## Wich are the best varieties
 
 Variety                             | Points mean | Points stddev| Price mean|Price min|Price max|Price stddev|Number tested|Row number
 ----------------------------------- | ----------- | ------------- | ---------- | --------- | --------- | ------------ | -------------|---------- 
@@ -409,7 +392,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 |Alicante Bouschet                  |88.97      |2.66         |30.20     |7.0      |150.0    |27.09       |63           |49        |
 |Kerner                             |88.92      |2.02         |23.20     |18.0     |44.0     |5.64        |26           |50        |
 
-## Witch country as most variety 
+## Wich countries have the most varieties
 
 |Country               |Number tested|Count variety|Points mean|Points stddev|Price mean|Price min|Price max|Price stddev|Row number|
 |----------------------|-------------|-------------|-----------|-------------|----------|---------|---------|------------|----------|
@@ -465,7 +448,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 |Japan                 |1            |1            |85.00      |null         |24.00     |24.0     |24.0     |null        |50        |
 
 
-## In witch country is there the best wine
+## Wich countries have the best wines
 
 |Country     |Number tested|Points mean|Points stddev|Points mean|Price min|Price max|Price stddev|Row number|
 |------------|-------------|-----------|-------------|-----------|---------|---------|------------|----------|
@@ -499,7 +482,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 |Mexico      |89           |85.22      |2.75         |85.22      |8.0      |108.0    |16.30       |40        |
 |Brazil      |57           |84.42      |2.34         |84.42      |10.0     |60.0     |10.86       |43        |
 
-## Witch is the best variety in the top 10 countries
+## Wich are the best varieties in the top 10 countries
 
 |Country |Variety                      |Points mean|Points stddev|Price mean|Price min|Price max|Number tested|Price stddev|Row number|
 |--------|-----------------------------|-----------|-------------|----------|---------|---------|-------------|------------|----------|
@@ -556,7 +539,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 
 
 
-## Witch is variety the most tested in country
+## Wich are the most tested varieties
 
 |Country     |Variety                      |Number tested|Price mean|Price min|Price max|Price stddev|Row number|
 |------------|-----------------------------|-------------|----------|---------|---------|------------|----------|
@@ -612,7 +595,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 |Argentina   |Cabernet Sauvignon           |794          |18.27     |5.0      |230.0    |16.01       |50        |
 
 
-## Witch country has the best variety ( top 20 )
+## Wich countries have the best varieties (top 20)
 
 |Country |Variety               |Points mean|Points stddev|Price mean|Price min|Price max|Price stddev|Number tested|Row number|
 |--------|----------------------|-----------|-------------|----------|---------|---------|------------|-------------|----------|
@@ -637,49 +620,3 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 |Italy   |Nerello Mascalese     |89.67      |2.67         |40.04     |10.0     |225.0    |28.36       |135          |19        |
 |US      |Grüner Veltliner      |88.43      |1.89         |21.72     |12.0     |40.0     |6.12        |101          |20        |
 |US      |Nebbiolo              |88.13      |3.66         |36.95     |15.0     |90.0     |16.78       |61           |21        |
-
-
-
-
-<!-- ESSAIS INFRUCTUEUX
-select * from [xxxxx].[dbo].[wineWIP] where region_1 is not null and region_2 is not null
-
-select * from solarAverages where country = 'US'
-
--- 1 -> create a mean of solar radiation
-	select * into solarAverages from (select country, place, ([January]
-      +[February]
-      +[March]
-      +[April]
-      +[May]
-      +[June]
-      +[July]
-      +[August]
-      +[September]
-      +[October]
-      +[November]
-      +[December])/12 as average from [xxxxx].[dbo].[radiation]) as vSolarAverages
-	  
--- 2 -> delete those who have a country that is not in the OpenSolarDB database
-	delete from WineWIP where country in ('Brazil','Montenegro','Peru','Uruguay','US-France');
-
--- 3 -> alter the table WineWIP to add a column for solar radiation
-	ALTER TABLE [xxxxx].[dbo].[wineWIP] ADD solarRadiation float;
-
--- 4 -> check data coherence
-	select count(1) from [xxxxx].[dbo].[wineWIP] where region_1 is null and region_2 is null;		  -- no region_1 and no region_2: 27686
-	select count(1) from [xxxxx].[dbo].[wineWIP] where region_1 is not null and region_2 is null;	  -- only region_1				: 74909
-	select count(1) from [xxxxx].[dbo].[wineWIP] where region_1 is null and region_2 is not null;	  -- only region_2				: 0
-	select count(1) from [xxxxx].[dbo].[wineWIP] where region_1 is not null and region_2 is not null; -- region_1 and region_2		: 67650
-																																------------
-																									  -- TOTAL						 170245
--- 5 -> complete the records having no region_1 or region_2 values
-UPDATE [xxxxx].[dbo].[wineWIP]
-SET [xxxxx].[dbo].[wineWIP].solarRadiation = (select AVG(solarAverages.average) from solarAverages where solarAverages.country = [xxxxx].[dbo].[wineWIP].country) 
-where [xxxxx].[dbo].[wineWIP].region_1 is null and [xxxxx].[dbo].[wineWIP].region_2 is null
-
--- 6 -> case only region_1
-UPDATE [xxxxx].[dbo].[wineWIP]
-SET [xxxxx].[dbo].[wineWIP].solarRadiation = (select AVG(solarAverages.average) from solarAverages where solarAverages.country = [xxxxx].[dbo].[wineWIP].country and [xxxxx].[dbo].[wineWIP].region_2 = solarAverages.Place) 
-where [xxxxx].[dbo].[wineWIP].region_1 is not null and [xxxxx].[dbo].[wineWIP].region_2 is not null; -- 67650 matches
--->
