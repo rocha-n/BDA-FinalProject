@@ -9,6 +9,24 @@ object SqlExecutor {
 
   def executeALlSql(): Unit = {
     generateTable(WINE_WITH_SOLAR);
+
+    println("Count points given and infos price")
+    sql(
+      """
+          SELECT wine.points, count(wine.points), AVG(wine.radiationAvg) as radiation,
+                 AVG(wine.price) as avg_price,
+                 STDDEV(wine.price) as stddev_price,
+                 MAX(wine.price) as max_price,
+                 MIN(wine.price) as min_price
+            FROM wine
+           GROUP BY wine.points
+           ORDER BY wine.points asc
+      """).withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
+      .withColumn("avg_price", col("avg_price").cast(DecimalType(10, 2)))
+      .withColumn("stddev_price", col("stddev_price").cast(DecimalType(10, 2)))
+      .show(100, truncate = false)
+//                 (
+
     println("Points vs radiation")
     sql(
       """
@@ -87,12 +105,15 @@ object SqlExecutor {
       """).withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
       .show(truncate = false)
 
-    println("Witch is the country with most test")
 
     println("With the max point")
     sql(
       """
-          SELECT wine.country, wine.points, wine.province, wine.price, wine.radiationAvg as radiation
+          SELECT wine.country,
+                 wine.points,
+                 wine.province,
+                 wine.price,
+                 wine.radiationAvg as radiation
             FROM wine
            WHERE wine.points = (SELECT MAX(w.points) FROM wine as w)
              AND PRICE IS NOT NULL
@@ -100,23 +121,6 @@ object SqlExecutor {
       """)
       .withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
       .show(truncate = false)
-
-    println("Count points given and infos price")
-    sql(
-      """
-          SELECT wine.points, count(wine.points), AVG(wine.radiationAvg) as radiation,
-                 AVG(wine.price) as avg_price,
-                 STDDEV(wine.price) as stddev_price,
-                 MAX(wine.price) as max_price,
-                 MIN(wine.price) as min_price
-            FROM wine
-           GROUP BY wine.points
-           ORDER BY wine.points asc
-      """).withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
-      .withColumn("avg_price", col("avg_price").cast(DecimalType(10, 2)))
-      .withColumn("stddev_price", col("stddev_price").cast(DecimalType(10, 2)))
-      .show(100, truncate = false)
-
 
     println("Country with the most radiation")
     sql(
@@ -128,5 +132,4 @@ object SqlExecutor {
       """).withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
       .show(100, truncate = false)
   }
-
 }
