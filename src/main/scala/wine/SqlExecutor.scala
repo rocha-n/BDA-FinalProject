@@ -25,7 +25,6 @@ object SqlExecutor {
       .withColumn("avg_price", col("avg_price").cast(DecimalType(10, 2)))
       .withColumn("stddev_price", col("stddev_price").cast(DecimalType(10, 2)))
       .show(100, truncate = false)
-//                 (
 
     println("Points vs radiation")
     sql(
