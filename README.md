@@ -70,23 +70,6 @@ So the first step is to perform some data cleaning on the kaggle files, in order
 After that, we will have to match each record of the database with climate records, in order to associate with each wine a medium solar irradiation value. Obviously, we will have to match the region_1 and region_2 fields from the Kaggle database with the Region field of the OpenSolar one. 
 
 
-##Démarche
-Pour la création des données, nous avons passé par la création de plusieurs fichiers.
-La création de fichiers n’a pas été facile réaliser nous somme aller voir sur stack overflow pour trouver la manière de pouvoir créer des fichiers csv. 
-Comme nous travaillons avec peu de données, il est possible de créer un seul fichier csv. 
-Si nous avions beaucoup de données, il aurait fallu premièrement travailler avec un autre type de fichier pour que cela soit plus rapide avec Spark et cela aurait aussi généré plusieurs fichiers.
-L’avantage d’un fichier CSV c’est qu’il peut être lu facilement par les humais.
-C’est pour cette raison que nous avons utilisé ce type de fichiers.
-Nous pouvons nous permettre de faire cela car la quantité de donnée n’est pas grande. 
-##Amélioration
-Nous n’avons pas l’année du vin, nous faisons donc une moyenne pour les notes et aussi pour le rayonnement de soleil. 
-Nous pensons qu’il aurait été bien d’avoir ces informations pour être plus précis. 
-Il serait donc intéressant de trouver d’autres donnée pour avoir l’année du vin et son évaluation.
-
-## Conclusion des résulats
-Il est difficile de dire que le soleil à une grande importance, sauf s’il y a trop de soleil.
-
-
 //TODO : If we don't find a match, medium value or closest point?
 
 ### Dataset cleaning and data quality observations
@@ -147,6 +130,22 @@ So, between the null values removed at the first step, and the ones mentionned i
 We spent a bit of time searching for a replacement for OpenSolarDB, in order to have a full coverage of data. Finally, due to the nearly-insignificant proportion of data loss, we agreed on going forward with our current data. It seems absolutely acceptable from our point of view.
 
 //TODO: A chart of nb of wines / country, and maybe the ratings distributsion
+
+##Démarche
+Pour la création des données, nous avons passé par la création de plusieurs fichiers.
+La création de fichiers n’a pas été facile réaliser nous somme aller voir sur stack overflow pour trouver la manière de pouvoir créer des fichiers csv. 
+Comme nous travaillons avec peu de données, il est possible de créer un seul fichier csv. 
+Si nous avions beaucoup de données, il aurait fallu premièrement travailler avec un autre type de fichier pour que cela soit plus rapide avec Spark et cela aurait aussi généré plusieurs fichiers.
+L’avantage d’un fichier CSV c’est qu’il peut être lu facilement par les humais.
+C’est pour cette raison que nous avons utilisé ce type de fichiers.
+Nous pouvons nous permettre de faire cela car la quantité de donnée n’est pas grande. 
+##Amélioration
+Nous n’avons pas l’année du vin, nous faisons donc une moyenne pour les notes et aussi pour le rayonnement de soleil. 
+Nous pensons qu’il aurait été bien d’avoir ces informations pour être plus précis. 
+Il serait donc intéressant de trouver d’autres donnée pour avoir l’année du vin et son évaluation.
+
+## Conclusion des résulats
+Il est difficile de dire que le soleil à une grande importance, sauf s’il y a trop de soleil.
 
 ### Matching regions with solar radiation
 
