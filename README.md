@@ -131,7 +131,7 @@ We spent a bit of time searching for a replacement for OpenSolarDB, in order to 
 
 //TODO: A chart of nb of wines / country, and maybe the ratings distributsion
 
-##Démarche
+## Démarche
 Pour la création des données, nous avons passé par la création de plusieurs fichiers.
 La création de fichiers n’a pas été facile réaliser nous somme aller voir sur stack overflow pour trouver la manière de pouvoir créer des fichiers csv. 
 Comme nous travaillons avec peu de données, il est possible de créer un seul fichier csv. 
@@ -139,7 +139,7 @@ Si nous avions beaucoup de données, il aurait fallu premièrement travailler av
 L’avantage d’un fichier CSV c’est qu’il peut être lu facilement par les humais.
 C’est pour cette raison que nous avons utilisé ce type de fichiers.
 Nous pouvons nous permettre de faire cela car la quantité de donnée n’est pas grande. 
-##Amélioration
+## Amélioration
 Nous n’avons pas l’année du vin, nous faisons donc une moyenne pour les notes et aussi pour le rayonnement de soleil. 
 Nous pensons qu’il aurait été bien d’avoir ces informations pour être plus précis. 
 Il serait donc intéressant de trouver d’autres donnée pour avoir l’année du vin et son évaluation.
