@@ -70,8 +70,6 @@ So the first step is to perform some data cleaning on the kaggle files, in order
 After that, we will have to match each record of the database with climate records, in order to associate with each wine a medium solar irradiation value. Obviously, we will have to match the region_1 and region_2 fields from the Kaggle database with the Region field of the OpenSolar one. 
 
 
-//TODO : If we don't find a match, medium value or closest point?
-
 ### Dataset cleaning and data quality observations
 
 <!-- 
@@ -148,7 +146,7 @@ Now that we had the data, we just had to write our code for obtaining anwers to 
 
 ## Results
 The radiation doesn't seem to have a big incidence on wine quality.
-But we see that there seems to be a threshold, after wich perceived quality starts to lower.
+But we see that there seems to be a threshold, after which perceived quality starts to lower.
 
 
 ## Future improvements
@@ -361,7 +359,7 @@ root
 |Corvina, Rondinella, Molinara|18.88    |1263    |88.60     |19.14        |12.89        |1.24            |535.0    |8.0      |96        |80        |2.62         |44.36       |
 
 
-## Wich are the best varieties
+## Which are the best varieties
 
 Variety                             | Points mean | Points stddev| Price mean|Price min|Price max|Price stddev|Number tested|Row number
 ----------------------------------- | ----------- | ------------- | ---------- | --------- | --------- | ------------ | -------------|---------- 
@@ -416,7 +414,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 |Alicante Bouschet                  |88.97      |2.66         |30.20     |7.0      |150.0    |27.09       |63           |49        |
 |Kerner                             |88.92      |2.02         |23.20     |18.0     |44.0     |5.64        |26           |50        |
 
-## Wich countries have the most varieties
+## Which countries have the most varieties
 
 |Country               |Number tested|Count variety|Points mean|Points stddev|Price mean|Price min|Price max|Price stddev|Row number|
 |----------------------|-------------|-------------|-----------|-------------|----------|---------|---------|------------|----------|
@@ -472,7 +470,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 |Japan                 |1            |1            |85.00      |null         |24.00     |24.0     |24.0     |null        |50        |
 
 
-## Wich countries have the best wines
+## Which countries have the best wines
 
 |Country     |Number tested|Points mean|Points stddev|Points mean|Price min|Price max|Price stddev|Row number|
 |------------|-------------|-----------|-------------|-----------|---------|---------|------------|----------|
@@ -506,7 +504,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 |Mexico      |89           |85.22      |2.75         |85.22      |8.0      |108.0    |16.30       |40        |
 |Brazil      |57           |84.42      |2.34         |84.42      |10.0     |60.0     |10.86       |43        |
 
-## Wich are the best varieties in the top 10 countries
+## Which are the best varieties in the top 10 countries
 
 |Country |Variety                      |Points mean|Points stddev|Price mean|Price min|Price max|Number tested|Price stddev|Row number|
 |--------|-----------------------------|-----------|-------------|----------|---------|---------|-------------|------------|----------|
@@ -563,7 +561,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 
 
 
-## Wich are the most tested varieties
+## Which are the most tested varieties
 
 |Country     |Variety                      |Number tested|Price mean|Price min|Price max|Price stddev|Row number|
 |------------|-----------------------------|-------------|----------|---------|---------|------------|----------|
@@ -619,7 +617,7 @@ Variety                             | Points mean | Points stddev| Price mean|Pr
 |Argentina   |Cabernet Sauvignon           |794          |18.27     |5.0      |230.0    |16.01       |50        |
 
 
-## Wich countries have the best varieties (top 20)
+## Which countries have the best varieties (top 20)
 
 |Country |Variety               |Points mean|Points stddev|Price mean|Price min|Price max|Price stddev|Number tested|Row number|
 |--------|----------------------|-----------|-------------|----------|---------|---------|------------|-------------|----------|
