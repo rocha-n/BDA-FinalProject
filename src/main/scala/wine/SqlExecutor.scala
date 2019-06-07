@@ -101,14 +101,20 @@ object SqlExecutor {
       .withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
       .show(truncate = false)
 
-    println("Count points given")
+    println("Count points given and infos price")
     sql(
       """
-          SELECT wine.points, count(wine.points), AVG(wine.radiationAvg) as radiation
+          SELECT wine.points, count(wine.points), AVG(wine.radiationAvg) as radiation,
+                 AVG(wine.price) as avg_price,
+                 STDDEV(wine.price) as stddev_price,
+                 MAX(wine.price) as max_price,
+                 MIN(wine.price) as min_price
             FROM wine
            GROUP BY wine.points
            ORDER BY wine.points asc
       """).withColumn("radiation", col("radiation").cast(DecimalType(10, 2)))
+      .withColumn("avg_price", col("avg_price").cast(DecimalType(10, 2)))
+      .withColumn("stddev_price", col("stddev_price").cast(DecimalType(10, 2)))
       .show(100, truncate = false)
 
 
